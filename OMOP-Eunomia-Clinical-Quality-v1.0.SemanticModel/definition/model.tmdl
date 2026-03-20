@@ -1,0 +1,66 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Concept","Concept_ancestor","Concept_relationship","Concept_synonym","Condition_era","Condition_occurrence","Domain","Drug_era","Drug_exposure","Measurement","Observation","Observation_period","Person","Procedure_occurrence","Relationship","Visit_occurrence","Vocabulary","_Measures"]
+
+annotation PBI_ProTooling = ["MCP-PBIModeling","DevMode"]
+
+ref table Concept
+ref table DateTableTemplate_8bf579b2-8efb-4a99-9882-cadd2a632ff0
+ref table LocalDateTable_bc065752-a0ea-4f54-bfa1-9bb7e82fb1d2
+ref table LocalDateTable_b0810915-de4c-477c-a694-9ffd3c6e95df
+ref table Concept_ancestor
+ref table Concept_relationship
+ref table LocalDateTable_cbeafd5f-4c1e-4a7a-9387-32bdc911ceda
+ref table LocalDateTable_2cd438bb-e89a-4b02-86cd-c71c936e360b
+ref table Concept_synonym
+ref table Condition_era
+ref table LocalDateTable_1c2fabc0-298d-4690-9a2b-300471d404e5
+ref table LocalDateTable_9eedea45-e9df-49cc-9612-252e8cd7864b
+ref table Condition_occurrence
+ref table LocalDateTable_a631e5e7-4050-407e-a7dd-5355e5b13af0
+ref table LocalDateTable_5a0e5a29-ed40-455d-9fc9-e98dea313522
+ref table LocalDateTable_a0444530-62fa-4b7c-b530-c81de15c1921
+ref table LocalDateTable_527f3fe4-a8e8-4e4d-a0e2-5f5adf1c9ff9
+ref table Domain
+ref table Drug_era
+ref table LocalDateTable_4ca320ad-bc80-41e2-8d9c-17a0041f0ffb
+ref table LocalDateTable_54007dca-1fe5-44f0-8b81-da7c59f6606d
+ref table Drug_exposure
+ref table LocalDateTable_29121115-69ee-45d2-8040-daf8d272ae06
+ref table LocalDateTable_e395cc23-dfea-4923-af16-bf01b8797157
+ref table LocalDateTable_08f9fc88-f429-411d-8202-0bef974f6d74
+ref table LocalDateTable_ee695954-f3b2-438f-8ef1-2a762f9faf5c
+ref table LocalDateTable_025fdd36-4cd3-4e0a-845e-fa94938a4a84
+ref table Measurement
+ref table LocalDateTable_8fa8e027-9251-4c66-8fda-a2b90f3ca893
+ref table LocalDateTable_4256c487-6324-47d1-a6bd-2a73ff46759d
+ref table Observation
+ref table LocalDateTable_8b9e9ad3-db97-487f-b2c7-97631ba04423
+ref table LocalDateTable_7bc00d47-2c96-4bff-89d7-618af97cf21f
+ref table Observation_period
+ref table LocalDateTable_98548626-877d-4f51-8bea-85db6a15440c
+ref table LocalDateTable_f98cd711-77f5-4c33-aed6-3b0e359c9cf7
+ref table Person
+ref table LocalDateTable_260134a5-cae9-41e1-bbb3-3676fd5c50f3
+ref table Procedure_occurrence
+ref table LocalDateTable_ac90578e-cce3-43db-bdca-ce473012e7f1
+ref table LocalDateTable_a2536543-f3d5-4443-9089-5aa3961fbd83
+ref table Relationship
+ref table Visit_occurrence
+ref table LocalDateTable_34f8537d-07c3-49ed-ab00-77a445f2e6bf
+ref table LocalDateTable_e9b82ce8-f660-415d-a7b0-263888cb2f51
+ref table LocalDateTable_d97c8fb3-8d47-4267-8a3f-9c617b6d8003
+ref table Vocabulary
+ref table Date
+ref table _Measures
+
+ref cultureInfo en-US
+

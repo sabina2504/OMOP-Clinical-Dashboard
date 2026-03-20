@@ -1,0 +1,64 @@
+/// Reference table defining all types of relationships that can exist between concepts in the CONCEPT_RELATIONSHIP table, including whether they are hierarchical and contribute to the ancestry table.
+table Relationship
+	lineageTag: 2c9030b5-985f-4be4-a00b-08d323bd5e25
+
+	column relationship_id
+		dataType: string
+		lineageTag: 4f5728cd-c831-4d99-9459-f42cb26d72d6
+		summarizeBy: none
+		sourceColumn: relationship_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column relationship_name
+		dataType: string
+		lineageTag: 7c9d8f10-be35-4160-96dd-7a4cbbabb5c5
+		summarizeBy: none
+		sourceColumn: relationship_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_hierarchical
+		dataType: string
+		lineageTag: 035fc034-95c5-4041-831c-580e2fb70f01
+		summarizeBy: none
+		sourceColumn: is_hierarchical
+
+		annotation SummarizationSetBy = Automatic
+
+	column defines_ancestry
+		dataType: string
+		lineageTag: 926ff3bc-9203-48b2-ab56-6f0c62519e23
+		summarizeBy: none
+		sourceColumn: defines_ancestry
+
+		annotation SummarizationSetBy = Automatic
+
+	column reverse_relationship_id
+		dataType: string
+		lineageTag: 24c6d113-dac9-4dca-a148-9a98ab9a5788
+		summarizeBy: none
+		sourceColumn: reverse_relationship_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column relationship_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9f962ce9-b0d7-4df1-9334-ead1eb2f0d55
+		summarizeBy: none
+		sourceColumn: relationship_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Relationship = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_relationship = Source{[Schema="public",Item="relationship"]}[Data]
+				in
+				    public_relationship
+
+	annotation PBI_ResultType = Table
+

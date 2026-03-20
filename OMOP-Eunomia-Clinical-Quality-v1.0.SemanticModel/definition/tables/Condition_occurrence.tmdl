@@ -1,0 +1,203 @@
+/// Contains records of diagnosed diseases, medical conditions, signs, and symptoms observed by a provider or reported by the patient, mapped to standard condition concepts.
+table Condition_occurrence
+	lineageTag: a0d2916b-8633-4d6e-983e-9d0bf6e64f36
+
+	/// Unique identifier for each condition record.
+	column condition_occurrence_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 015fb81f-bd45-4105-b3de-a07d3cc1cfba
+		summarizeBy: none
+		sourceColumn: condition_occurrence_id
+
+		annotation SummarizationSetBy = User
+
+	/// Foreign key to the PERSON table identifying the patient with this condition.
+	column person_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b2ded7cc-e8ff-4c1d-9719-d2b81da79b65
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID representing the condition. Primary field for analysis. Maps source codes to the Condition domain.
+	column condition_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 28dd006a-99aa-4d23-ab46-27d834db72fc
+		summarizeBy: none
+		sourceColumn: condition_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The start date of the condition occurrence. If only one date is available in the source, it is used for both start and end.
+	column condition_start_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4349620d-2962-4452-a65b-49ff0882c225
+		summarizeBy: none
+		sourceColumn: condition_start_date
+
+		variation Variation
+			isDefault
+			relationship: d6d9a6d4-a7c3-4df9-b759-bbe2fb023735
+			defaultHierarchy: LocalDateTable_a631e5e7-4050-407e-a7dd-5355e5b13af0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// The start datetime of the condition. Set to midnight if only a date is available.
+	column condition_start_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 64d983df-72c4-4af1-bea4-cd8bde846b0c
+		summarizeBy: none
+		sourceColumn: condition_start_datetime
+
+		variation Variation
+			isDefault
+			relationship: 82d8daec-d0dc-4782-80d4-c3a7f854cdcf
+			defaultHierarchy: LocalDateTable_5a0e5a29-ed40-455d-9fc9-e98dea313522.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The end date of the condition occurrence, if available. Often not present in source data.
+	column condition_end_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b8d1258f-0fb1-46df-8b0e-be9e34e00627
+		summarizeBy: none
+		sourceColumn: condition_end_date
+
+		variation Variation
+			isDefault
+			relationship: 7504dffd-1b80-4376-a995-19fd95465756
+			defaultHierarchy: LocalDateTable_a0444530-62fa-4b7c-b530-c81de15c1921.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// The end datetime of the condition. Set to midnight if only a date is available.
+	column condition_end_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3b67443f-9531-4201-8757-bc7f1fa953b5
+		summarizeBy: none
+		sourceColumn: condition_end_datetime
+
+		variation Variation
+			isDefault
+			relationship: 742cb5a1-5e6d-472f-abf5-a31efa458550
+			defaultHierarchy: LocalDateTable_527f3fe4-a8e8-4e4d-a0e2-5f5adf1c9ff9.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID describing the provenance of the condition record, such as EHR primary diagnosis, claim diagnosis, etc.
+	column condition_type_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 53b07044-d110-406c-a02e-234c5f6a36f5
+		summarizeBy: none
+		sourceColumn: condition_type_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID representing the clinical status of the diagnosis, such as admitting diagnosis, principal diagnosis, or secondary diagnosis.
+	column condition_status_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: ef325be6-fe0a-44fe-a43e-707299940d85
+		summarizeBy: none
+		sourceColumn: condition_status_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The reason the condition is no longer valid, as recorded in the source data.
+	column stop_reason
+		dataType: string
+		lineageTag: aed06b50-651f-4b8c-8f45-f2e11a085453
+		summarizeBy: none
+		sourceColumn: stop_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the PROVIDER table identifying the provider who made or recorded the diagnosis.
+	column provider_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 3795049d-0c64-4471-8b2a-13604518aee4
+		summarizeBy: none
+		sourceColumn: provider_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the VISIT_OCCURRENCE table linking this condition to the visit during which it was recorded.
+	column visit_occurrence_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 2fd363f4-5887-4c85-946d-e923595377eb
+		summarizeBy: none
+		sourceColumn: visit_occurrence_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the VISIT_DETAIL table linking this condition to a specific sub-visit encounter.
+	column visit_detail_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6ebe45d9-78dc-42a3-ad6d-f4defbe09b33
+		summarizeBy: none
+		sourceColumn: visit_detail_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The source code for the condition as it appears in the source data (e.g., ICD-10 code), retained for reference.
+	column condition_source_value
+		dataType: string
+		lineageTag: f8888dc3-0d3b-4585-bd28-4d234c4f65fc
+		summarizeBy: none
+		sourceColumn: condition_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID for the source condition code, if it maps to an OMOP-supported vocabulary.
+	column condition_source_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: eb8121c3-3806-43f8-89f6-49f0290f1964
+		summarizeBy: none
+		sourceColumn: condition_source_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The condition status as it appears in the source data, prior to mapping to a standard concept.
+	column condition_status_source_value
+		dataType: string
+		lineageTag: 05c86879-b653-49e5-b904-373d53fc44ed
+		summarizeBy: none
+		sourceColumn: condition_status_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Extracted calendar year from condition_start_date. Hidden helper column used for per-year condition aggregations.
+	column condition_start_year = YEAR(Condition_occurrence[condition_start_date])
+		dataType: int64
+		isHidden
+		lineageTag: abeab5a5-1345-4d67-855a-30003fd7e330
+		summarizeBy: none
+
+	partition Condition_occurrence = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_condition_occurrence = Source{[Schema="public",Item="condition_occurrence"]}[Data]
+				in
+				    public_condition_occurrence
+
+	annotation PBI_ResultType = Table
+

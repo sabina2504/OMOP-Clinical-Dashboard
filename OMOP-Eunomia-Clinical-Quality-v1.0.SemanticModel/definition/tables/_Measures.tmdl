@@ -1,0 +1,359 @@
+/// Central table housing all DAX measures for the OMOP CDM dataset.
+table _Measures
+	lineageTag: 8118a4fd-24a0-459b-b737-1c0a17cb01ff
+
+	/// Total number of unique patients in the dataset.
+	measure 'Total Patients' = DISTINCTCOUNT('Person'[person_id])
+		formatString: #,0
+		displayFolder: Patients
+		lineageTag: 3600d1ab-a661-475b-b6e6-12140e0da597
+
+	/// Number of patients identified as female (gender concept_id 8532).
+	measure 'Female Patients' = CALCULATE(DISTINCTCOUNT(Person[person_id]), Person[gender_concept_id] = 8532)
+		formatString: #,0
+		displayFolder: Patients
+		lineageTag: 146a5c6b-db48-4051-8c3d-7bc6c6bdd04e
+
+	/// Number of patients identified as male (gender concept_id 8507).
+	measure 'Male Patients' = CALCULATE(DISTINCTCOUNT(Person[person_id]), Person[gender_concept_id] = 8507)
+		formatString: #,0
+		displayFolder: Patients
+		lineageTag: 0eb4b711-ece1-4138-b4be-2117c1f88f9f
+
+	/// Proportion of patients who are female.
+	measure '% Female' = DIVIDE([Female Patients], [Total Patients])
+		formatString: 0.0%
+		displayFolder: Patients
+		lineageTag: c4e55c81-5012-4a89-bfb6-77a9bb937a70
+
+	/// Proportion of patients who are male.
+	measure '% Male' = DIVIDE([Male Patients], [Total Patients])
+		formatString: 0.0%
+		displayFolder: Patients
+		lineageTag: 7f60b0f1-1efa-421c-9b2b-deb6135df262
+
+	/// Average age of all patients, calculated from year of birth to current year.
+	measure 'Avg Patient Age' = AVERAGEX(Person, YEAR(TODAY()) - Person[year_of_birth])
+		formatString: 0.0
+		displayFolder: Patients
+		lineageTag: 8a80a2eb-1d97-4b45-a6be-690ea6e8626f
+
+	/// Number of unique patients who have at least one condition occurrence recorded.
+	measure 'Patients with Conditions' = DISTINCTCOUNT(Condition_occurrence[person_id])
+		formatString: #,0
+		displayFolder: Patients
+		lineageTag: 649efb33-bf69-409c-9917-826b73f4e918
+
+	/// Number of unique patients who have at least one drug exposure recorded.
+	measure 'Patients with Drug Exposure' = DISTINCTCOUNT(Drug_exposure[person_id])
+		formatString: #,0
+		displayFolder: Patients
+		lineageTag: bf2ed142-6cfc-48bc-8d3f-69131cc30002
+
+	/// Number of unique patients who have at least one measurement recorded.
+	measure 'Patients with Measurements' = DISTINCTCOUNT(Measurement[person_id])
+		formatString: #,0
+		displayFolder: Patients
+		lineageTag: 807a460b-b77d-4416-a8aa-2b16743128a0
+
+	/// Number of unique patients who have at least one visit occurrence recorded.
+	measure 'Patients with Visits' = DISTINCTCOUNT(Visit_occurrence[person_id])
+		formatString: #,0
+		displayFolder: Patients
+		lineageTag: d1b40e4f-b285-47fb-a003-12238a28b8f7
+
+	/// Number of unique patients who have at least one observation recorded.
+	measure 'Patients with Observations' = DISTINCTCOUNT(Observation[person_id])
+		formatString: #,0
+		displayFolder: Patients
+		lineageTag: cdf81483-41d2-47db-bc48-4fec11d99a1b
+
+	/// Total number of condition occurrence records.
+	measure 'Total Condition Occurrences' = COUNTROWS(Condition_occurrence)
+		formatString: #,0
+		displayFolder: Conditions
+		lineageTag: b9ccd3e9-435f-4277-8345-49877452847b
+
+	/// Number of distinct condition concepts recorded across all patients.
+	measure 'Unique Conditions' = DISTINCTCOUNT(Condition_occurrence[condition_concept_id])
+		formatString: #,0
+		displayFolder: Conditions
+		lineageTag: 37894cab-7247-4f99-bdae-20b3d6c880ca
+
+	/// Average number of condition occurrences per patient who has at least one condition.
+	measure 'Avg Conditions per Patient' = DIVIDE(COUNT('Condition_occurrence'[condition_occurrence_id]), [Total Patients])
+		formatString: 0.0
+		displayFolder: Conditions
+		lineageTag: 0a0fe103-9016-4d65-ab9b-9be759412a07
+
+	/// Total number of condition era records (continuous spans of a condition).
+	measure 'Total Condition Eras' = COUNTROWS(Condition_era)
+		formatString: #,0
+		displayFolder: Conditions
+		lineageTag: 4d37aa25-2cbd-4d65-8e37-6ac7db3e7672
+
+	/// Average length in days of a condition era across all patients.
+	measure 'Avg Condition Era Duration (Days)' = AVERAGEX(Condition_era, DATEDIFF(Condition_era[condition_era_start_date], Condition_era[condition_era_end_date], DAY))
+		formatString: #,0
+		displayFolder: Conditions
+		lineageTag: e916eaad-7c08-4d61-b6fb-b044461fc5b2
+
+	/// Total number of drug exposure records.
+	measure 'Total Drug Exposures' = COUNTROWS(Drug_exposure)
+		formatString: #,0
+		displayFolder: Drugs
+		lineageTag: 9e7889c0-662a-49f6-8ad7-d29bfee80648
+
+	/// Number of distinct drug concepts recorded across all patients.
+	measure 'Unique Drugs' = DISTINCTCOUNT(Drug_exposure[drug_concept_id])
+		formatString: #,0
+		displayFolder: Drugs
+		lineageTag: b46f76ba-a83d-4f84-87d7-434ba022d062
+
+	/// Average number of drug exposures per patient who has at least one drug record.
+	measure 'Avg Drug Exposures per Patient' = DIVIDE(COUNT('Drug_exposure'[drug_exposure_id]), [Total Patients])
+		formatString: 0.0
+		displayFolder: Drugs
+		lineageTag: 2cc95e86-a96b-46ae-8525-21c0bec88f77
+
+	/// Total number of drug era records (continuous ingredient exposure spans).
+	measure 'Total Drug Eras' = COUNTROWS(Drug_era)
+		formatString: #,0
+		displayFolder: Drugs
+		lineageTag: 103b1783-b5d2-4d40-a07b-6b880b620cf2
+
+	/// Average length in days of a drug era across all patients.
+	measure 'Avg Drug Era Duration (Days)' = AVERAGEX(Drug_era, DATEDIFF(Drug_era[drug_era_start_date], Drug_era[drug_era_end_date], DAY))
+		formatString: #,0
+		displayFolder: Drugs
+		lineageTag: 3c056fef-467f-4311-a1ba-a4295dbc547a
+
+	/// Average number of days supply per drug exposure record.
+	measure 'Avg Days Supply' = AVERAGE(Drug_exposure[days_supply])
+		formatString: 0.0
+		displayFolder: Drugs
+		lineageTag: 35609d06-2092-4162-8a5f-25a5860a1c6b
+
+	/// Total number of visit occurrence records.
+	measure 'Total Visits' = COUNTROWS(Visit_occurrence)
+		formatString: #,0
+		displayFolder: Visits
+		lineageTag: ed462423-48d4-48ea-93cb-90475aa65c83
+
+	/// Number of distinct visit concept types (e.g., inpatient, outpatient, ER).
+	measure 'Unique Visit Types' = DISTINCTCOUNT(Visit_occurrence[visit_concept_id])
+		formatString: #,0
+		displayFolder: Visits
+		lineageTag: 46fcf870-a6c9-476f-8f16-4a8f61469c19
+
+	/// Average number of visits per patient who has at least one visit.
+	measure 'Avg Visits per Patient' = DIVIDE([Total Visits], [Patients with Visits])
+		formatString: 0.0
+		displayFolder: Visits
+		lineageTag: ae543477-2222-4585-8d4a-ebb7a4030aa6
+
+	/// Average length of stay in days across all visit occurrences.
+	measure 'Avg Visit Duration (Days)' =
+			AVERAGEX(
+			    Visit_occurrence,
+			    DATEDIFF(Visit_occurrence[visit_start_date], Visit_occurrence[visit_end_date], DAY)
+			)
+		formatString: 0.0
+		displayFolder: Visits
+		lineageTag: a673e178-8b8f-4a19-aff8-90d1a771bcfa
+
+	/// Number of inpatient visit records (visit concept_id 9201).
+	measure 'Inpatient Visits' = CALCULATE(COUNTROWS(Visit_occurrence), Visit_occurrence[visit_concept_id] = 9201)
+		formatString: #,0
+		displayFolder: Visits
+		lineageTag: abf4a899-56fb-4902-b6b6-0df957feb9c1
+
+	/// Number of outpatient visit records (visit concept_id 9202).
+	measure 'Outpatient Visits' = CALCULATE(COUNTROWS(Visit_occurrence), Visit_occurrence[visit_concept_id] = 9202)
+		formatString: #,0
+		displayFolder: Visits
+		lineageTag: fec15eb7-3122-4437-bee5-f1269e304776
+
+	/// Number of emergency room visit records (visit concept_id 9203).
+	measure 'Emergency Room Visits' = CALCULATE(COUNTROWS(Visit_occurrence), Visit_occurrence[visit_concept_id] = 9203)
+		formatString: #,0
+		displayFolder: Visits
+		lineageTag: 5e0d0783-8373-46bd-a10e-b0219c780322
+
+	/// Total number of measurement records (lab tests, vitals, etc.).
+	measure 'Total Measurements' = COUNTROWS(Measurement)
+		formatString: #,0
+		displayFolder: Measurements
+		lineageTag: e5922f1c-190a-4f50-a0a2-6339e9f36f39
+
+	/// Number of distinct measurement concept types recorded.
+	measure 'Unique Measurement Types' = DISTINCTCOUNT(Measurement[measurement_concept_id])
+		formatString: #,0
+		displayFolder: Measurements
+		lineageTag: 3c39e1ad-f63f-413c-9b95-29aadb8b4a8d
+
+	/// Average number of measurements per patient who has at least one measurement.
+	measure 'Avg Measurements per Patient' = DIVIDE([Total Measurements], [Patients with Measurements])
+		formatString: 0.0
+		displayFolder: Measurements
+		lineageTag: 144f3763-83ec-494b-bcfc-a0ca4fd8a131
+
+	/// Average numeric result value across all measurement records where a value exists.
+	measure 'Avg Measurement Value' = AVERAGE(Measurement[value_as_number])
+		formatString: 0.00
+		displayFolder: Measurements
+		lineageTag: 8f093102-1270-4b0e-9b89-7ae0717c8a4e
+
+	/// Number of measurement records that contain a numeric result value.
+	measure 'Measurements with Numeric Value' = CALCULATE(COUNTROWS(Measurement), NOT ISBLANK(Measurement[value_as_number]))
+		formatString: #,0
+		displayFolder: Measurements
+		lineageTag: 9713375e-370d-4743-9a86-9cc51b28a60a
+
+	/// Number of measurements where the result value exceeds the normal high reference range.
+	measure 'Measurements Above Range High' =
+			CALCULATE(
+			    COUNTROWS(Measurement),
+			    NOT ISBLANK(Measurement[value_as_number]),
+			    NOT ISBLANK(Measurement[range_high]),
+			    Measurement[value_as_number] > Measurement[range_high]
+			)
+		formatString: #,0
+		displayFolder: Measurements
+		lineageTag: e04bd1a4-5078-4d97-af27-add0d835e296
+
+	/// Number of measurements where the result value falls below the normal low reference range.
+	measure 'Measurements Below Range Low' =
+			CALCULATE(
+			    COUNTROWS(Measurement),
+			    NOT ISBLANK(Measurement[value_as_number]),
+			    NOT ISBLANK(Measurement[range_low]),
+			    Measurement[value_as_number] < Measurement[range_low]
+			)
+		formatString: #,0
+		displayFolder: Measurements
+		lineageTag: 6feaf021-732c-416d-8e2d-4d6c29d3716d
+
+	/// Total number of procedure occurrence records.
+	measure 'Total Procedures' = COUNTROWS(Procedure_occurrence)
+		formatString: #,0
+		displayFolder: Procedures
+		lineageTag: 61955667-6ab1-4ea6-8cb5-be756a64ae54
+
+	/// Number of distinct procedure concept types performed.
+	measure 'Unique Procedures' = DISTINCTCOUNT(Procedure_occurrence[procedure_concept_id])
+		formatString: #,0
+		displayFolder: Procedures
+		lineageTag: a3fac697-fa2b-4905-9bc4-841fd0ff9a72
+
+	/// Number of unique patients who have at least one procedure recorded.
+	measure 'Patients with Procedures' = DISTINCTCOUNT(Procedure_occurrence[person_id])
+		formatString: #,0
+		displayFolder: Procedures
+		lineageTag: 8a3d895a-09ff-4afe-9e27-1a33a4eaa2d5
+
+	/// Average number of procedures per patient who has at least one procedure record.
+	measure 'Avg Procedures per Patient' = DIVIDE([Total Procedures], [Patients with Procedures])
+		formatString: 0.0
+		displayFolder: Procedures
+		lineageTag: 7cd51bb5-0ad7-4801-8d99-8e9c1d98ecf8
+
+	/// Total number of observation records.
+	measure 'Total Observations' = COUNTROWS(Observation)
+		formatString: #,0
+		displayFolder: Observations
+		lineageTag: cc577ab4-ecc1-4175-a547-9f3f803654c9
+
+	/// Number of distinct observation concept types recorded.
+	measure 'Unique Observation Types' = DISTINCTCOUNT(Observation[observation_concept_id])
+		formatString: #,0
+		displayFolder: Observations
+		lineageTag: 9ce91d64-3620-4b22-96a0-f4c5d2d832bb
+
+	/// Average number of observations per patient who has at least one observation record.
+	measure 'Avg Observations per Patient' = DIVIDE([Total Observations], [Patients with Observations])
+		formatString: 0.0
+		displayFolder: Observations
+		lineageTag: f3d767be-9a55-42fd-9d6b-926407d9cf43
+
+	/// Average length of observation periods in days across all patients.
+	measure 'Avg Observation Period (Days)' =
+			AVERAGEX(
+			    Observation_period,
+			    DATEDIFF(Observation_period[observation_period_start_date], Observation_period[observation_period_end_date], DAY)
+			)
+		formatString: #,0
+		displayFolder: Observation Periods
+		lineageTag: 9cbed8ca-526f-43f8-a1c4-b6c14903b6b4
+
+	/// Total number of observation period records.
+	measure 'Total Observation Periods' = COUNTROWS(Observation_period)
+		formatString: #,0
+		displayFolder: Observation Periods
+		lineageTag: 30a2837a-ea9d-4935-8985-4de96a278b4a
+
+	/// Number of unique patients who have at least one observation period defined.
+	measure 'Patients with Observation Period' = DISTINCTCOUNT(Observation_period[person_id])
+		formatString: #,0
+		displayFolder: Observation Periods
+		lineageTag: e1949c58-633c-442d-a537-95f81778c881
+
+	/// Earliest observation period start date in the dataset.
+	measure 'Min Observation Date' = MIN(Observation_period[observation_period_start_date])
+		formatString: Short Date
+		displayFolder: Observation Periods
+		lineageTag: c0f05403-c992-4c27-9ec8-4f1f171ace11
+
+	/// Latest observation period end date in the dataset.
+	measure 'Max Observation Date' = MAX(Observation_period[observation_period_end_date])
+		formatString: Short Date
+		displayFolder: Observation Periods
+		lineageTag: 768ea4d5-850b-421c-bb32-e829cc9aecdc
+
+	/// Number of unique patients who have 10 or more distinct conditions recorded across their entire observation history.
+	measure 'Patients with 10+ Conditions' =
+			COUNTROWS(
+			    FILTER(
+			        ADDCOLUMNS(
+			            VALUES(Condition_occurrence[person_id]),
+			            "DistinctConditions", CALCULATE(DISTINCTCOUNT(Condition_occurrence[condition_concept_id]))
+			        ),
+			        [DistinctConditions] >= 10
+			    )
+			)
+		formatString: #,0
+		displayFolder: Patients\Comorbidity
+		lineageTag: 83e152f9-8bf1-42d1-ac1d-9b985ee99067
+
+	/// Number of unique patients who had 3 or more distinct conditions recorded within at least one single calendar year. Uses the condition_start_year helper column on Condition_occurrence.
+	measure 'Patients with 3+ Conditions in a Year' =
+			COUNTROWS(
+			    DISTINCT(
+			        SELECTCOLUMNS(
+			            FILTER(
+			                SUMMARIZE(
+			                    Condition_occurrence,
+			                    Condition_occurrence[person_id],
+			                    Condition_occurrence[condition_start_year],
+			                    "CondCount", DISTINCTCOUNT(Condition_occurrence[condition_concept_id])
+			                ),
+			                [CondCount] >= 3
+			            ),
+			            "pid", Condition_occurrence[person_id]
+			        )
+			    )
+			)
+		formatString: #,0
+		displayFolder: Patients\Comorbidity
+		lineageTag: fbd3acc5-fc8c-4a14-9168-69759d96b572
+
+	column Placeholder
+		dataType: string
+		isHidden
+		lineageTag: d88651ee-2d9f-45d7-bdc9-be875d6a9916
+		sourceColumn: Placeholder
+
+	partition _Measures = m
+		mode: import
+		source = let Source = #table(type table [Placeholder = text], {{""}}) in Source
+

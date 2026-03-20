@@ -1,0 +1,102 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "d85f0b8d75bc633bf3e1",
+  "position": {
+    "x": 544,
+    "y": 0,
+    "z": 9000,
+    "height": 112,
+    "width": 736,
+    "tabOrder": 9000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Patients with 10+ Conditions"
+                }
+              },
+              "queryRef": "_Measures.Patients with 10+ Conditions",
+              "nativeQueryRef": "Patients with 10+ Conditions"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Patients with 3+ Conditions in a Year"
+                }
+              },
+              "queryRef": "_Measures.Patients with 3+ Conditions in a Year",
+              "nativeQueryRef": "Patients with 3+ Conditions in a Year"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Patients with 10+ Conditions"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "f984fecfb604775c8605",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Patients with 10+ Conditions"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f0d085f85b2efa5205c7",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Patients with 3+ Conditions in a Year"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

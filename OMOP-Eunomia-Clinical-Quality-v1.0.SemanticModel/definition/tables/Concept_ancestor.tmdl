@@ -1,0 +1,55 @@
+/// Precomputed hierarchical relationships between concepts at all levels of ancestry, enabling efficient roll-up queries across drug classes, condition hierarchies, and other clinical taxonomies.
+table Concept_ancestor
+	lineageTag: 8f2c8039-7216-4531-8608-094599d0201d
+
+	/// Concept ID of the higher-level ancestor concept in the hierarchy.
+	column ancestor_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 003dc1fa-91ee-4927-ae4a-37010caa810f
+		summarizeBy: none
+		sourceColumn: ancestor_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID of the lower-level descendant concept in the hierarchy.
+	column descendant_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 59d88d38-4ede-4600-bbbe-a9f726168695
+		summarizeBy: none
+		sourceColumn: descendant_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Minimum number of hierarchy levels between the ancestor and descendant, used to simplify hierarchical analysis.
+	column min_levels_of_separation
+		dataType: int64
+		formatString: 0
+		lineageTag: 32b0db51-4dc3-44f6-b1c8-a0eb333b27f3
+		summarizeBy: none
+		sourceColumn: min_levels_of_separation
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Maximum number of hierarchy levels between the ancestor and descendant.
+	column max_levels_of_separation
+		dataType: int64
+		formatString: 0
+		lineageTag: 09ca52c3-6a92-4235-837d-e480ae4dde24
+		summarizeBy: none
+		sourceColumn: max_levels_of_separation
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Concept_ancestor = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_concept_ancestor = Source{[Schema="public",Item="concept_ancestor"]}[Data]
+				in
+				    public_concept_ancestor
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,40 @@
+/// Reference table listing all OMOP-defined clinical domains (e.g., Condition, Drug, Procedure, Measurement) that classify where concepts are used in the CDM.
+table Domain
+	lineageTag: 807dad68-34f3-445b-97b2-fe4597c59b04
+
+	column domain_id
+		dataType: string
+		lineageTag: 64650012-5bf1-4fdd-9ef5-f2d61df2359a
+		summarizeBy: none
+		sourceColumn: domain_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column domain_name
+		dataType: string
+		lineageTag: 148c74ba-2caa-49a7-9a09-a361b7587d27
+		summarizeBy: none
+		sourceColumn: domain_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column domain_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 5127fa15-00c0-45ed-91b2-71fd452f14fd
+		summarizeBy: none
+		sourceColumn: domain_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Domain = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_domain = Source{[Schema="public",Item="domain"]}[Data]
+				in
+				    public_domain
+
+	annotation PBI_ResultType = Table
+

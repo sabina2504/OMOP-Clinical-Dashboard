@@ -1,0 +1,201 @@
+/// Records encounters between a person and the healthcare system over a duration of time, including inpatient stays, outpatient visits, emergency room visits, and other encounter types.
+table Visit_occurrence
+	lineageTag: 29afebcc-efb3-4dfb-9dd6-a4e5b6d43bc7
+
+	/// Unique identifier for each visit record. Links to clinical event tables to associate events with a specific visit.
+	column visit_occurrence_id
+		dataType: int64
+		formatString: 0
+		lineageTag: aa801ab1-83aa-41d2-9fd6-6dcad2e47d11
+		summarizeBy: none
+		sourceColumn: visit_occurrence_id
+
+		annotation SummarizationSetBy = User
+
+	/// Foreign key to the PERSON table identifying the patient for this visit.
+	column person_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f8442226-0f79-4312-b734-9fd28557adf5
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID representing the kind of visit, such as Inpatient Visit, Outpatient Visit, or Emergency Room Visit.
+	column visit_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b2cd551-18d5-441c-ad44-4644976736c5
+		summarizeBy: none
+		sourceColumn: visit_concept_id
+
+		annotation SummarizationSetBy = User
+
+	/// The start date of the visit. For inpatient visits, this is typically the admission date.
+	column visit_start_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4af6b30d-6a9b-41ed-959c-ae7185d3ee41
+		summarizeBy: none
+		sourceColumn: visit_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// The start datetime of the visit. Set to midnight if time is not available.
+	column visit_start_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4d2173a3-5009-4057-8a41-57a9ff69515a
+		summarizeBy: none
+		sourceColumn: visit_start_datetime
+
+		variation Variation
+			isDefault
+			relationship: 9a2cb333-69a3-4a35-9686-c2f18c3bfff3
+			defaultHierarchy: LocalDateTable_34f8537d-07c3-49ed-ab00-77a445f2e6bf.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The end date of the visit. For inpatient visits, typically the discharge date. For outpatient visits, same as start date.
+	column visit_end_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 92c3d0b5-9368-4572-ba3e-4d20ad6d8468
+		summarizeBy: none
+		sourceColumn: visit_end_date
+
+		variation Variation
+			isDefault
+			relationship: 84023827-97ea-47ef-922c-e2340464cae7
+			defaultHierarchy: LocalDateTable_e9b82ce8-f660-415d-a7b0-263888cb2f51.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// The end datetime of the visit. Set to midnight if time is not available.
+	column visit_end_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 15282cc4-55c1-41d5-a520-0203f90f040c
+		summarizeBy: none
+		sourceColumn: visit_end_datetime
+
+		variation Variation
+			isDefault
+			relationship: bf6bcfb4-a1d2-4f84-bd36-1ee4c68d59ba
+			defaultHierarchy: LocalDateTable_d97c8fb3-8d47-4267-8a3f-9c617b6d8003.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID describing the provenance of the visit record, such as EHR encounter or administrative claim.
+	column visit_type_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 2c4f5b68-7db3-41c0-b8af-c6bd7cc7014e
+		summarizeBy: none
+		sourceColumn: visit_type_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the PROVIDER table identifying the primary provider associated with the visit.
+	column provider_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 5ccb2fe7-b156-4d5f-be65-f7929eb2746a
+		summarizeBy: none
+		sourceColumn: provider_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the CARE_SITE table identifying where the visit took place.
+	column care_site_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 460e5730-6920-4554-9d6c-d569625ada9f
+		summarizeBy: none
+		sourceColumn: care_site_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The visit type as it appears in the source data (e.g., inpatient, outpatient), retained for reference.
+	column visit_source_value
+		dataType: string
+		lineageTag: 7fc44555-1c55-4158-9f6a-145b80b24219
+		summarizeBy: none
+		sourceColumn: visit_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID for the visit source value if coded in an OMOP-supported vocabulary.
+	column visit_source_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 86235de9-ca00-4809-88e7-c4e1bad906b2
+		summarizeBy: none
+		sourceColumn: visit_source_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID representing where the patient was admitted from, such as home or a long-term care facility.
+	column admitting_source_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 94a7ec44-e4fa-4282-856d-3566901e5592
+		summarizeBy: none
+		sourceColumn: admitting_source_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The admission source as it appears in the source data.
+	column admitting_source_value
+		dataType: string
+		lineageTag: 716ee0c0-e3f3-4436-92f3-6c5132587d64
+		summarizeBy: none
+		sourceColumn: admitting_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID representing where the patient was discharged to after the visit. Use 0 for discharge to home.
+	column discharge_to_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 0627d3f7-5ecc-40ca-9e5f-f951ba4af6f9
+		summarizeBy: none
+		sourceColumn: discharge_to_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The discharge destination as it appears in the source data.
+	column discharge_to_source_value
+		dataType: string
+		lineageTag: 0ca78ff2-06a1-4042-9caa-8051af7b52fb
+		summarizeBy: none
+		sourceColumn: discharge_to_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the immediately preceding visit for this person, used to trace visit sequences over time.
+	column preceding_visit_occurrence_id
+		dataType: int64
+		formatString: 0
+		lineageTag: ded89831-3daf-45c6-8d88-c3cf9b2fff88
+		summarizeBy: none
+		sourceColumn: preceding_visit_occurrence_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Visit_occurrence = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_visit_occurrence = Source{[Schema="public",Item="visit_occurrence"]}[Data]
+				in
+				    public_visit_occurrence
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,95 @@
+/// Derived table representing continuous spans of time when a person is assumed to be exposed to a particular drug ingredient, aggregated from individual drug exposure records.
+table Drug_era
+	lineageTag: 11d10204-763e-4fab-bfaa-5328d936b3fa
+
+	/// Unique identifier for each drug era record.
+	column drug_era_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b4d28527-cdd6-4e5f-8d70-4843ceec3be2
+		summarizeBy: none
+		sourceColumn: drug_era_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the PERSON table identifying the patient for this drug era.
+	column person_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 159af0fe-7f0a-4700-a852-6b312940b725
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID representing the active drug ingredient. Must be at the Ingredient concept class level.
+	column drug_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: bb6b697f-3090-47bc-a609-2d9f670ccd6b
+		summarizeBy: none
+		sourceColumn: drug_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Start date of the first drug exposure for this ingredient, with at least 31 days since any prior exposure.
+	column drug_era_start_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ab3761a5-7aa1-43d0-8713-9188274f18ef
+		summarizeBy: none
+		sourceColumn: drug_era_start_date
+
+		variation Variation
+			isDefault
+			relationship: 4198f06a-58eb-410b-81c1-14c1ed02326d
+			defaultHierarchy: LocalDateTable_4ca320ad-bc80-41e2-8d9c-17a0041f0ffb.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// End date of the last drug exposure in this era, calculated using days of supply with a 30-day persistence window.
+	column drug_era_end_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 54c25396-670a-4470-aa33-7639b789b1cf
+		summarizeBy: none
+		sourceColumn: drug_era_end_date
+
+		variation Variation
+			isDefault
+			relationship: b6645fcc-e76d-401f-ba35-7c2bc404334c
+			defaultHierarchy: LocalDateTable_54007dca-1fe5-44f0-8b81-da7c59f6606d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The number of individual drug exposure records that were combined to form this drug era.
+	column drug_exposure_count
+		dataType: int64
+		formatString: 0
+		lineageTag: b7732607-0d36-4030-884c-1af13229500b
+		summarizeBy: none
+		sourceColumn: drug_exposure_count
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Total number of drug-free days observed between all drug exposures within this era, assuming no drug stockpiling.
+	column gap_days
+		dataType: int64
+		formatString: 0
+		lineageTag: af032593-74bc-4137-8ce1-3d696256248e
+		summarizeBy: none
+		sourceColumn: gap_days
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Drug_era = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_drug_era = Source{[Schema="public",Item="drug_era"]}[Data]
+				in
+				    public_drug_era
+
+	annotation PBI_ResultType = Table
+

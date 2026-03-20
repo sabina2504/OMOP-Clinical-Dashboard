@@ -1,0 +1,165 @@
+/// Contains records of clinical activities or processes ordered by or carried out by a healthcare provider for diagnostic or therapeutic purposes.
+table Procedure_occurrence
+	lineageTag: 19df6ed5-3af5-48f7-9eda-bf55f891855d
+
+	/// Unique identifier for each procedure record.
+	column procedure_occurrence_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7951d464-6f6d-4102-b88e-9bbd71b62b82
+		summarizeBy: none
+		sourceColumn: procedure_occurrence_id
+
+		annotation SummarizationSetBy = User
+
+	/// Foreign key to the PERSON table identifying the patient for this procedure.
+	column person_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 19c71b30-e63e-496e-8b8d-79651d4b89cf
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID representing the procedure performed. Primary field for analysis. Maps to the Procedure domain.
+	column procedure_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 17a62dcb-1aaf-4bd2-ab41-501992080054
+		summarizeBy: none
+		sourceColumn: procedure_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The date the procedure was performed. Will be renamed PROCEDURE_START_DATE in a future CDM version.
+	column procedure_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: eecf9861-43b9-408d-b2cd-f8cbaf87879d
+		summarizeBy: none
+		sourceColumn: procedure_date
+
+		variation Variation
+			isDefault
+			relationship: 247bc5b6-9f5a-4f5e-b913-482fe19ed53b
+			defaultHierarchy: LocalDateTable_ac90578e-cce3-43db-bdca-ce473012e7f1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// The datetime the procedure was performed. Will be renamed PROCEDURE_START_DATETIME in a future CDM version.
+	column procedure_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6dd8c208-9bf4-4ded-9c34-e61b8b476393
+		summarizeBy: none
+		sourceColumn: procedure_datetime
+
+		variation Variation
+			isDefault
+			relationship: cc5acb79-1df5-4507-b222-f4f5d45158dd
+			defaultHierarchy: LocalDateTable_a2536543-f3d5-4443-9089-5aa3961fbd83.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID describing the provenance of the procedure record, such as EHR encounter or billing claim.
+	column procedure_type_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1740802d-f289-4e34-a8d8-1b354a8262d8
+		summarizeBy: none
+		sourceColumn: procedure_type_concept_id
+
+		annotation SummarizationSetBy = User
+
+	/// Concept ID for a procedure modifier providing additional context, such as a CPT4 modifier code.
+	column modifier_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 58fbb460-5243-43b3-888b-bad592fdf7a4
+		summarizeBy: none
+		sourceColumn: modifier_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The number of times the procedure was performed. Defaults to 1 if not specified or if recorded as 0 in source.
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 39c4c5e2-30d8-4dd1-b9ce-5ed37abd1fc1
+		summarizeBy: none
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the PROVIDER table identifying the provider who performed the procedure.
+	column provider_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f402d14e-09a7-4248-b175-80c77ef993e8
+		summarizeBy: none
+		sourceColumn: provider_id
+
+		annotation SummarizationSetBy = User
+
+	/// Foreign key to the VISIT_OCCURRENCE table linking this procedure to the visit during which it was performed.
+	column visit_occurrence_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9ef4755a-c453-4cc6-99c8-3a2242aadf61
+		summarizeBy: none
+		sourceColumn: visit_occurrence_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the VISIT_DETAIL table linking this procedure to a specific sub-visit encounter.
+	column visit_detail_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 88257a06-238c-4162-b975-080ed5f710f1
+		summarizeBy: none
+		sourceColumn: visit_detail_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The procedure code as it appears in the source data (e.g., CPT4 code), retained for reference.
+	column procedure_source_value
+		dataType: string
+		lineageTag: b5384b64-4093-4218-88ba-79aa11025ac3
+		summarizeBy: none
+		sourceColumn: procedure_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID for the source procedure code if it maps to an OMOP-supported vocabulary.
+	column procedure_source_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 12411b80-9eec-440b-b54a-1696a05f7f2a
+		summarizeBy: none
+		sourceColumn: procedure_source_concept_id
+
+		annotation SummarizationSetBy = User
+
+	/// The procedure modifier code as it appears in the source data, retained for reference.
+	column modifier_source_value
+		dataType: string
+		lineageTag: 3088aefd-b9da-4cec-84f3-8c83d296bb54
+		summarizeBy: none
+		sourceColumn: modifier_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Procedure_occurrence = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_procedure_occurrence = Source{[Schema="public",Item="procedure_occurrence"]}[Data]
+				in
+				    public_procedure_occurrence
+
+	annotation PBI_ResultType = Table
+

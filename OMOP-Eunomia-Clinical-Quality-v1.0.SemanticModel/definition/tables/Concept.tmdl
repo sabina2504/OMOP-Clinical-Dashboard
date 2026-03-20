@@ -1,0 +1,122 @@
+/// Reference table containing all standardized clinical concepts used across the CDM. Each concept uniquely identifies a fundamental unit of meaning (diagnosis, drug, procedure, etc.) from source vocabularies such as SNOMED-CT, RxNorm, and LOINC.
+table Concept
+	lineageTag: cd5ce6a7-9893-4f18-942d-08149643fc6d
+
+	/// Unique identifier for each concept across all clinical domains.
+	column concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9f1522a9-a429-4403-bc8a-b4196c04c2cb
+		summarizeBy: none
+		sourceColumn: concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The unambiguous, descriptive name of the concept (e.g., 'Myocardial infarction', 'Metformin').
+	column concept_name
+		dataType: string
+		lineageTag: 8d178e90-8bf2-435f-9764-eb23776dcc73
+		summarizeBy: none
+		sourceColumn: concept_name
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the DOMAIN table indicating which clinical domain this concept belongs to (e.g., Condition, Drug, Procedure).
+	column domain_id
+		dataType: string
+		lineageTag: f9f62b5d-9f46-4b78-99fb-092154186ee4
+		summarizeBy: none
+		sourceColumn: domain_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the VOCABULARY table indicating the source vocabulary (e.g., SNOMED, RxNorm, ICD10CM, LOINC).
+	column vocabulary_id
+		dataType: string
+		lineageTag: b9210cf0-84cd-4105-95bc-e92b4f28a965
+		summarizeBy: none
+		sourceColumn: vocabulary_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The attribute or class of the concept, such as Clinical Finding, Ingredient, or Clinical Drug.
+	column concept_class_id
+		dataType: string
+		lineageTag: 3e31ba1d-61e3-4fba-b05f-1b4bfbecd629
+		summarizeBy: none
+		sourceColumn: concept_class_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Indicates whether the concept is a Standard Concept (S), Classification Concept (C), or non-standard source concept (NULL).
+	column standard_concept
+		dataType: string
+		lineageTag: 860dd47b-bbf1-44ed-adf9-97f90c6a49d5
+		summarizeBy: none
+		sourceColumn: standard_concept
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The identifier of the concept in the source vocabulary, such as a SNOMED-CT code or RxCUI. Not unique across vocabularies.
+	column concept_code
+		dataType: string
+		lineageTag: a8760501-4534-406a-9671-9833572ce970
+		summarizeBy: none
+		sourceColumn: concept_code
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The date when the concept was first recorded. Defaults to 1-Jan-1970 if inception date is unknown.
+	column valid_start_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c2e379cf-2081-470a-b1ad-5a3f9250566d
+		summarizeBy: none
+		sourceColumn: valid_start_date
+
+		variation Variation
+			isDefault
+			relationship: 6921256f-b6aa-451d-8c95-6c207d5264fd
+			defaultHierarchy: LocalDateTable_bc065752-a0ea-4f54-bfa1-9bb7e82fb1d2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// The date when the concept became invalid. Defaults to 31-Dec-2099 for currently valid concepts.
+	column valid_end_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 429a71cd-4a84-44a2-8afd-94fb60cd744c
+		summarizeBy: none
+		sourceColumn: valid_end_date
+
+		variation Variation
+			isDefault
+			relationship: 24f6d6c4-b9f7-46cd-9b2d-95565d61b5cf
+			defaultHierarchy: LocalDateTable_b0810915-de4c-477c-a694-9ffd3c6e95df.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Reason the concept was invalidated: D (deleted), U (replaced by an update), or NULL if still valid.
+	column invalid_reason
+		dataType: string
+		lineageTag: 00e5229a-a5d7-4739-af6d-4e2310e769a3
+		summarizeBy: none
+		sourceColumn: invalid_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Concept = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_concept = Source{[Schema="public",Item="concept"]}[Data]
+				in
+				    public_concept
+
+	annotation PBI_ResultType = Table
+

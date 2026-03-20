@@ -1,0 +1,8 @@
+{
+  "version": "4.0",
+  "datasetReference": {
+    "byPath": {
+      "path": "../OMOP-Eunomia-Clinical-Quality-v1.0.SemanticModel"
+    }
+  }
+}

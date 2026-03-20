@@ -1,0 +1,144 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "ab8821f922452c342317",
+  "position": {
+    "x": 544,
+    "y": 576,
+    "z": 10000,
+    "height": 304,
+    "width": 736,
+    "tabOrder": 10000
+  },
+  "visual": {
+    "visualType": "scatterChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Person"
+                    }
+                  },
+                  "Property": "person_id"
+                }
+              },
+              "queryRef": "Person.person_id",
+              "nativeQueryRef": "person_id",
+              "active": true
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avg Conditions per Patient"
+                }
+              },
+              "queryRef": "_Measures.Avg Conditions per Patient",
+              "nativeQueryRef": "Avg Conditions per Patient",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avg Drug Exposures per Patient"
+                }
+              },
+              "queryRef": "_Measures.Avg Drug Exposures per Patient",
+              "nativeQueryRef": "Avg Drug Exposures per Patient"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "trend": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "displayName": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Trend line 1'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "57374ec9c3a9f83234ee",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Avg Conditions per Patient"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f291aa1337669b13eaee",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Avg Drug Exposures per Patient"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "34c6e42a77fe333f7454",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Person"
+              }
+            },
+            "Property": "person_id"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

@@ -1,0 +1,266 @@
+relationship 6921256f-b6aa-451d-8c95-6c207d5264fd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Concept.valid_start_date
+	toColumn: LocalDateTable_bc065752-a0ea-4f54-bfa1-9bb7e82fb1d2.Date
+
+relationship 24f6d6c4-b9f7-46cd-9b2d-95565d61b5cf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Concept.valid_end_date
+	toColumn: LocalDateTable_b0810915-de4c-477c-a694-9ffd3c6e95df.Date
+
+relationship d39df9d0-80fd-40c3-a5d0-f139d932ea6e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Concept_relationship.valid_start_date
+	toColumn: LocalDateTable_cbeafd5f-4c1e-4a7a-9387-32bdc911ceda.Date
+
+relationship a6d5d891-3dff-4926-8266-7cbbff0c84e8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Concept_relationship.valid_end_date
+	toColumn: LocalDateTable_2cd438bb-e89a-4b02-86cd-c71c936e360b.Date
+
+relationship 6c6cd876-53d1-4988-9de1-18be2b2de609
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Condition_era.condition_era_start_date
+	toColumn: LocalDateTable_1c2fabc0-298d-4690-9a2b-300471d404e5.Date
+
+relationship 52802d7f-5e38-4bdb-b14f-156b80268659
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Condition_era.condition_era_end_date
+	toColumn: LocalDateTable_9eedea45-e9df-49cc-9612-252e8cd7864b.Date
+
+relationship d6d9a6d4-a7c3-4df9-b759-bbe2fb023735
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Condition_occurrence.condition_start_date
+	toColumn: LocalDateTable_a631e5e7-4050-407e-a7dd-5355e5b13af0.Date
+
+relationship 82d8daec-d0dc-4782-80d4-c3a7f854cdcf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Condition_occurrence.condition_start_datetime
+	toColumn: LocalDateTable_5a0e5a29-ed40-455d-9fc9-e98dea313522.Date
+
+relationship 7504dffd-1b80-4376-a995-19fd95465756
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Condition_occurrence.condition_end_date
+	toColumn: LocalDateTable_a0444530-62fa-4b7c-b530-c81de15c1921.Date
+
+relationship 742cb5a1-5e6d-472f-abf5-a31efa458550
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Condition_occurrence.condition_end_datetime
+	toColumn: LocalDateTable_527f3fe4-a8e8-4e4d-a0e2-5f5adf1c9ff9.Date
+
+relationship 4198f06a-58eb-410b-81c1-14c1ed02326d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Drug_era.drug_era_start_date
+	toColumn: LocalDateTable_4ca320ad-bc80-41e2-8d9c-17a0041f0ffb.Date
+
+relationship b6645fcc-e76d-401f-ba35-7c2bc404334c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Drug_era.drug_era_end_date
+	toColumn: LocalDateTable_54007dca-1fe5-44f0-8b81-da7c59f6606d.Date
+
+relationship d74b5ba6-25fd-45d5-90aa-380b43acfe84
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Drug_exposure.drug_exposure_start_date
+	toColumn: LocalDateTable_29121115-69ee-45d2-8040-daf8d272ae06.Date
+
+relationship 757e7c57-4661-458d-b70c-7bb8f104cf3b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Drug_exposure.drug_exposure_start_datetime
+	toColumn: LocalDateTable_e395cc23-dfea-4923-af16-bf01b8797157.Date
+
+relationship fac297dc-e663-4c25-b313-7ccd3161a23f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Drug_exposure.drug_exposure_end_date
+	toColumn: LocalDateTable_08f9fc88-f429-411d-8202-0bef974f6d74.Date
+
+relationship ff7d4586-4be9-4ee3-a160-773adada149c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Drug_exposure.drug_exposure_end_datetime
+	toColumn: LocalDateTable_ee695954-f3b2-438f-8ef1-2a762f9faf5c.Date
+
+relationship 5ec9515d-a3f1-4a96-bf8a-f5a03ceb45af
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Drug_exposure.verbatim_end_date
+	toColumn: LocalDateTable_025fdd36-4cd3-4e0a-845e-fa94938a4a84.Date
+
+relationship 53f16ddd-0605-4973-80ee-25679e0a365a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Measurement.measurement_date
+	toColumn: LocalDateTable_8fa8e027-9251-4c66-8fda-a2b90f3ca893.Date
+
+relationship daad6a9f-ed28-4aa4-bce8-d419647eb228
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Measurement.measurement_datetime
+	toColumn: LocalDateTable_4256c487-6324-47d1-a6bd-2a73ff46759d.Date
+
+relationship 253cdab3-f07a-460c-bddf-3293d11d511f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Observation.observation_date
+	toColumn: LocalDateTable_8b9e9ad3-db97-487f-b2c7-97631ba04423.Date
+
+relationship 6f19d1f2-2b88-48c6-bdbe-99e25a6bea37
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Observation.observation_datetime
+	toColumn: LocalDateTable_7bc00d47-2c96-4bff-89d7-618af97cf21f.Date
+
+relationship 781d7fdb-47fc-4514-9be8-f0eb20291a52
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Observation_period.observation_period_start_date
+	toColumn: LocalDateTable_98548626-877d-4f51-8bea-85db6a15440c.Date
+
+relationship 1d4c54c5-4264-44fd-8d9a-7cf581d21974
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Observation_period.observation_period_end_date
+	toColumn: LocalDateTable_f98cd711-77f5-4c33-aed6-3b0e359c9cf7.Date
+
+relationship a811cd84-4783-4544-ac2a-038b88ccc4bb
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Person.birth_datetime
+	toColumn: LocalDateTable_260134a5-cae9-41e1-bbb3-3676fd5c50f3.Date
+
+relationship 247bc5b6-9f5a-4f5e-b913-482fe19ed53b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Procedure_occurrence.procedure_date
+	toColumn: LocalDateTable_ac90578e-cce3-43db-bdca-ce473012e7f1.Date
+
+relationship cc5acb79-1df5-4507-b222-f4f5d45158dd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Procedure_occurrence.procedure_datetime
+	toColumn: LocalDateTable_a2536543-f3d5-4443-9089-5aa3961fbd83.Date
+
+relationship 9a2cb333-69a3-4a35-9686-c2f18c3bfff3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Visit_occurrence.visit_start_datetime
+	toColumn: LocalDateTable_34f8537d-07c3-49ed-ab00-77a445f2e6bf.Date
+
+relationship 84023827-97ea-47ef-922c-e2340464cae7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Visit_occurrence.visit_end_date
+	toColumn: LocalDateTable_e9b82ce8-f660-415d-a7b0-263888cb2f51.Date
+
+relationship bf6bcfb4-a1d2-4f84-bd36-1ee4c68d59ba
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Visit_occurrence.visit_end_datetime
+	toColumn: LocalDateTable_d97c8fb3-8d47-4267-8a3f-9c617b6d8003.Date
+
+relationship AutoDetected_40cb9ba2-19d1-4267-80d8-3042bf85dcb4
+	fromColumn: Concept_synonym.concept_id
+	toColumn: Concept.concept_id
+
+relationship AutoDetected_73f525f6-828e-445a-88f9-c138980b8308
+	fromColumn: Concept.domain_id
+	toColumn: Domain.domain_id
+
+relationship AutoDetected_f59f2c12-efad-4d9b-9b31-e76f433833c1
+	fromColumn: Concept.vocabulary_id
+	toColumn: Vocabulary.vocabulary_id
+
+relationship AutoDetected_b599c612-ecbe-4cfb-bbb3-0dbbbd693a6c
+	fromColumn: Concept_relationship.relationship_id
+	toColumn: Relationship.relationship_id
+
+relationship AutoDetected_ee06782c-b949-4f9c-8fe8-2b6a790f6810
+	fromColumn: Concept_relationship.concept_id_1
+	toColumn: Concept.concept_id
+
+relationship 31c974e4-8e61-ef62-231e-02dbf0e34a50
+	fromColumn: Procedure_occurrence.person_id
+	toColumn: Person.person_id
+
+relationship 26c6c331-da1c-aa0b-cf81-87b2f8ef23b2
+	fromColumn: Condition_occurrence.person_id
+	toColumn: Person.person_id
+
+relationship 25ac45c2-0c76-7401-f0c5-1dcf1c1d61ac
+	fromColumn: Observation.person_id
+	toColumn: Person.person_id
+
+relationship befe4dc7-db2d-4d72-6335-579f8978c31d
+	fromColumn: Measurement.person_id
+	toColumn: Person.person_id
+
+relationship 9555ff5f-1867-3be0-f2a3-afd4c0082b56
+	fromColumn: Drug_exposure.person_id
+	toColumn: Person.person_id
+
+relationship 717983c2-6947-70a0-96aa-32d5c56c5f7a
+	crossFilteringBehavior: bothDirections
+	fromColumn: Visit_occurrence.person_id
+	toColumn: Person.person_id
+
+relationship e68d710b-1338-365b-a8dd-2873ad48609e
+	isActive: false
+	fromColumn: Observation.visit_occurrence_id
+	toColumn: Visit_occurrence.visit_occurrence_id
+
+relationship 5d23728c-52ca-28ea-0b53-0b6e368fbf3e
+	isActive: false
+	fromColumn: Drug_exposure.visit_occurrence_id
+	toColumn: Visit_occurrence.visit_occurrence_id
+
+relationship baef9840-ca74-2c76-8614-7303a42307cc
+	isActive: false
+	fromColumn: Measurement.visit_occurrence_id
+	toColumn: Visit_occurrence.visit_occurrence_id
+
+relationship 165e7987-5882-672e-4d3e-9a7e880e14e8
+	isActive: false
+	fromColumn: Procedure_occurrence.visit_occurrence_id
+	toColumn: Visit_occurrence.visit_occurrence_id
+
+relationship 8899f258-40f3-aa14-9f6c-c5c365a0c66d
+	isActive: false
+	fromColumn: Condition_occurrence.visit_occurrence_id
+	toColumn: Visit_occurrence.visit_occurrence_id
+
+relationship 8c5dec5d-5e20-6aa6-0fc3-1bc119284521
+	fromColumn: Concept_ancestor.ancestor_concept_id
+	toColumn: Concept.concept_id
+
+relationship fd1945e2-c1ee-80b7-259e-e72363df6205
+	isActive: false
+	fromColumn: Concept_ancestor.descendant_concept_id
+	toColumn: Concept.concept_id
+
+relationship 32c1fddf-e50c-50bd-7c7f-8f3425312272
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Person.person_id
+	toColumn: Observation_period.person_id
+
+relationship d1a0d217-2fcf-f6b5-2d30-8e74046e7a64
+	fromColumn: Procedure_occurrence.procedure_concept_id
+	toColumn: Concept.concept_id
+
+relationship 84638590-120d-98a4-3a88-9c48f7851298
+	fromColumn: Condition_occurrence.condition_concept_id
+	toColumn: Concept.concept_id
+
+relationship 0059e7de-d823-ca28-8912-4b405a357fb1
+	fromColumn: Observation.observation_concept_id
+	toColumn: Concept.concept_id
+
+relationship e457c3f3-33e7-d910-c844-88dd840ba865
+	fromColumn: Measurement.measurement_concept_id
+	toColumn: Concept.concept_id
+
+relationship 0e474944-f175-d412-86f5-e4cfef21ceab
+	fromColumn: Drug_exposure.drug_concept_id
+	toColumn: Concept.concept_id
+
+relationship 66018247-edce-df60-23ee-0e02c852509c
+	fromColumn: Condition_era.condition_concept_id
+	toColumn: Concept.concept_id
+
+relationship 26532f23-c2d1-0625-4d3a-d7aa665df5ad
+	fromColumn: Drug_era.drug_concept_id
+	toColumn: Concept.concept_id
+
+relationship f883aa1d-961a-2af6-39d6-999b27815553
+	fromColumn: Visit_occurrence.visit_concept_id
+	toColumn: Concept.concept_id
+
+relationship e8880eb8-6b1c-c05f-16b8-dfcc311c643f
+	fromColumn: Visit_occurrence.visit_start_date
+	toColumn: Date.Date
+

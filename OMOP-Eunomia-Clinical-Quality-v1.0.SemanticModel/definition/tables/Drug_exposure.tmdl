@@ -1,0 +1,271 @@
+/// Captures records of drugs ingested or otherwise introduced into the body, including prescriptions written, prescriptions dispensed, and drugs administered by a provider.
+table Drug_exposure
+	lineageTag: 6f6d5f4b-77fa-4a70-89da-0c43ed4396fa
+
+	/// Unique identifier for each drug dispensing or administration record.
+	column drug_exposure_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b1777ac-8e40-4884-b531-c58c4e960083
+		summarizeBy: none
+		sourceColumn: drug_exposure_id
+
+		annotation SummarizationSetBy = User
+
+	/// Foreign key to the PERSON table identifying the patient for this drug exposure.
+	column person_id
+		dataType: int64
+		formatString: 0
+		lineageTag: dfc6471c-0fee-41f2-abbc-af7d6f246a0d
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID representing the drug product or active ingredient. Primary field for analysis. Maps to the Drug domain.
+	column drug_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6e4d33f3-c57b-4284-8e18-3c6079b5b8d6
+		summarizeBy: none
+		sourceColumn: drug_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Start date of the drug exposure, such as the prescription date, dispense date, or administration date.
+	column drug_exposure_start_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0e0fc82e-f1c0-44f3-8e49-0d2f43284637
+		summarizeBy: none
+		sourceColumn: drug_exposure_start_date
+
+		variation Variation
+			isDefault
+			relationship: d74b5ba6-25fd-45d5-90aa-380b43acfe84
+			defaultHierarchy: LocalDateTable_29121115-69ee-45d2-8040-daf8d272ae06.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Start datetime of the drug exposure. Set to midnight if time is not available.
+	column drug_exposure_start_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1945006a-20aa-4394-a16f-ef72d1d2da22
+		summarizeBy: none
+		sourceColumn: drug_exposure_start_datetime
+
+		variation Variation
+			isDefault
+			relationship: 757e7c57-4661-458d-b70c-7bb8f104cf3b
+			defaultHierarchy: LocalDateTable_e395cc23-dfea-4923-af16-bf01b8797157.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The date the drug exposure ended, either explicitly recorded or inferred from start date plus days of supply.
+	column drug_exposure_end_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 637dd6ab-1927-472b-a7e0-194e7031eb44
+		summarizeBy: none
+		sourceColumn: drug_exposure_end_date
+
+		variation Variation
+			isDefault
+			relationship: fac297dc-e663-4c25-b313-7ccd3161a23f
+			defaultHierarchy: LocalDateTable_08f9fc88-f429-411d-8202-0bef974f6d74.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// The end datetime of the drug exposure. Set to midnight if time is not available.
+	column drug_exposure_end_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 973cd17d-3fc0-4044-916a-5f3ee851e1b0
+		summarizeBy: none
+		sourceColumn: drug_exposure_end_datetime
+
+		variation Variation
+			isDefault
+			relationship: ff7d4586-4be9-4ee3-a160-773adada149c
+			defaultHierarchy: LocalDateTable_ee695954-f3b2-438f-8ef1-2a762f9faf5c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The end or discontinuation date exactly as it appears in the source data, without transformation.
+	column verbatim_end_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e89c0cd6-d95b-47e3-8554-9be08e83480c
+		summarizeBy: none
+		sourceColumn: verbatim_end_date
+
+		variation Variation
+			isDefault
+			relationship: 5ec9515d-a3f1-4a96-bf8a-f5a03ceb45af
+			defaultHierarchy: LocalDateTable_025fdd36-4cd3-4e0a-845e-fa94938a4a84.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Concept ID describing the provenance of the record, such as prescription written, prescription dispensed, or drug administered.
+	column drug_type_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 10fe916d-fb15-46d5-87f0-b7114b318d96
+		summarizeBy: none
+		sourceColumn: drug_type_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The reason the patient stopped the medication as recorded in the source data.
+	column stop_reason
+		dataType: string
+		lineageTag: b030d645-2394-4ac3-bfbd-60a274549d9e
+		summarizeBy: none
+		sourceColumn: stop_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The number of intended refills at the time the prescription was written, for prescription records only.
+	column refills
+		dataType: int64
+		formatString: 0
+		lineageTag: 7218d80c-410c-482d-8cb3-af08c43de1be
+		summarizeBy: none
+		sourceColumn: refills
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The amount of drug dispensed or administered. For tablets, this is the count; for liquids, the total ingredient amount.
+	column quantity
+		dataType: double
+		lineageTag: 4d595694-9c07-44ec-a0d4-ff83d326bc6b
+		summarizeBy: none
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// The number of days of supply as recorded in the original prescription or dispensing record.
+	column days_supply
+		dataType: int64
+		formatString: 0
+		lineageTag: edaaf7b1-b942-4830-95b1-a0143f63b861
+		summarizeBy: none
+		sourceColumn: days_supply
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The verbatim instruction for the drug as written by the prescribing provider.
+	column sig
+		dataType: string
+		lineageTag: 9df10fd1-eda3-460f-a618-dca6f3a42e7c
+		summarizeBy: none
+		sourceColumn: sig
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID representing the route of drug administration (e.g., oral, intravenous).
+	column route_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 3a5a06b0-3c62-4727-ad46-bb5091271368
+		summarizeBy: none
+		sourceColumn: route_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The lot number of the drug product as recorded in the source data.
+	column lot_number
+		dataType: string
+		lineageTag: 80c6cf64-d06e-4f51-b846-a5d9ec1f871a
+		summarizeBy: none
+		sourceColumn: lot_number
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the PROVIDER table identifying the provider who prescribed or administered the drug.
+	column provider_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 05b4db38-e4ae-435f-8b00-cf45a9994923
+		summarizeBy: none
+		sourceColumn: provider_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the VISIT_OCCURRENCE table linking this drug exposure to the visit during which it occurred.
+	column visit_occurrence_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1af635c2-7f95-4d50-b707-85da6fdb8dbb
+		summarizeBy: none
+		sourceColumn: visit_occurrence_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the VISIT_DETAIL table linking this drug exposure to a specific sub-visit encounter.
+	column visit_detail_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 5ee5dcea-7f1e-4112-ba73-c95bab8bb9ba
+		summarizeBy: none
+		sourceColumn: visit_detail_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The drug code as it appears in the source data (e.g., NDC code), retained for reference.
+	column drug_source_value
+		dataType: string
+		lineageTag: 94c23f0a-f744-4e3e-a8e8-9ccc205e71de
+		summarizeBy: none
+		sourceColumn: drug_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID for the drug source code if it maps to an OMOP-supported vocabulary.
+	column drug_source_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 071074a1-e28c-49a5-955d-55840d4b6f68
+		summarizeBy: none
+		sourceColumn: drug_source_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The route of administration as it appears in the source data.
+	column route_source_value
+		dataType: string
+		lineageTag: 59502bff-a778-4b76-8410-d095b823f173
+		summarizeBy: none
+		sourceColumn: route_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The dose unit as it appears in the source data, retained for reference.
+	column dose_unit_source_value
+		dataType: string
+		lineageTag: eef84d79-2f47-4e6c-bae9-6c8d3024b47f
+		summarizeBy: none
+		sourceColumn: dose_unit_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Drug_exposure = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_drug_exposure = Source{[Schema="public",Item="drug_exposure"]}[Data]
+				in
+				    public_drug_exposure
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,85 @@
+/// Derived table representing continuous spans of time when a person is assumed to have a given condition, aggregated from individual condition occurrence records.
+table Condition_era
+	lineageTag: 44b1aa16-cb85-4b88-8887-94252e93488c
+
+	/// Unique identifier for each condition era record.
+	column condition_era_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a362e15-d251-47e3-95e7-996625d7851c
+		summarizeBy: none
+		sourceColumn: condition_era_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the PERSON table identifying the patient for this condition era.
+	column person_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 5f93f5ad-2fe2-4e00-a11d-9d630352d008
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID representing the condition. Matches the condition_concept_id values in the CONDITION_OCCURRENCE table.
+	column condition_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6bf0c4d0-a2a6-4b6a-9070-04927136c052
+		summarizeBy: none
+		sourceColumn: condition_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Start date of the first condition occurrence in this era, with at least 31 days since any prior record of the same condition.
+	column condition_era_start_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 49e35bd8-53d5-4a74-ac28-d4a5022ebe5d
+		summarizeBy: none
+		sourceColumn: condition_era_start_date
+
+		variation Variation
+			isDefault
+			relationship: 6c6cd876-53d1-4988-9de1-18be2b2de609
+			defaultHierarchy: LocalDateTable_1c2fabc0-298d-4690-9a2b-300471d404e5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// End date of the last condition occurrence in this era. Eras end after 30 days without a new occurrence of the same condition.
+	column condition_era_end_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 675516ff-d2ee-42f3-8eb4-b4648f1b86be
+		summarizeBy: none
+		sourceColumn: condition_era_end_date
+
+		variation Variation
+			isDefault
+			relationship: 52802d7f-5e38-4bdb-b14f-156b80268659
+			defaultHierarchy: LocalDateTable_9eedea45-e9df-49cc-9612-252e8cd7864b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The number of individual condition occurrence records that were combined to form this condition era.
+	column condition_occurrence_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 56f4a8fe-d692-4f95-9f49-666dacc641b2
+		summarizeBy: none
+		sourceColumn: condition_occurrence_count
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Condition_era = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_condition_era = Source{[Schema="public",Item="condition_era"]}[Data]
+				in
+				    public_condition_era
+
+	annotation PBI_ResultType = Table
+

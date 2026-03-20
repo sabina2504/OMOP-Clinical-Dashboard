@@ -1,0 +1,248 @@
+/// Central identity table that uniquely identifies each patient in the database and stores core demographic information such as gender, year of birth, race, and ethnicity.
+table Person
+	lineageTag: 43a8a06b-ab60-49b6-9e3f-dee4d3d716b4
+
+	/// Unique identifier for each person in the database. Every person with a different identifier is treated as an independent individual.
+	column person_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 22be4c8b-301e-47ff-872e-9c45afc7b005
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID representing the biological sex at birth of the person. Maps to the Gender domain in the OMOP vocabulary.
+	column gender_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 91b716e0-0eb1-42f8-93fa-c5e0c6d8f650
+		summarizeBy: none
+		sourceColumn: gender_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The year the person was born. Used for computing age. Required for all persons in the CDM.
+	column year_of_birth
+		dataType: int64
+		formatString: 0
+		lineageTag: 5f46e6d1-ee93-4ed3-99e0-ce9d8edf9e6f
+		summarizeBy: none
+		sourceColumn: year_of_birth
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The month of birth extracted from the person’s date of birth, if available in the source data.
+	column month_of_birth
+		dataType: int64
+		formatString: 0
+		lineageTag: 5b17cea2-7405-4a09-b825-6d4d4c2adab0
+		summarizeBy: none
+		sourceColumn: month_of_birth
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The day of birth extracted from the person’s date of birth, if available in the source data.
+	column day_of_birth
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ce69289-9bbf-4b7a-a975-8cc27aa2a03c
+		summarizeBy: none
+		sourceColumn: day_of_birth
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The precise date and time of birth, if available. Highly encouraged when source data provides this information.
+	column birth_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fac911fa-ad69-4628-a742-b1ee497739a4
+		summarizeBy: none
+		sourceColumn: birth_datetime
+
+		variation Variation
+			isDefault
+			relationship: a811cd84-4783-4544-ac2a-038b88ccc4bb
+			defaultHierarchy: LocalDateTable_260134a5-cae9-41e1-bbb3-3676fd5c50f3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID representing the race or ethnic background of the person. Maps to the Race domain.
+	column race_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: cded1ee5-b984-487a-a936-bc97693c6d28
+		summarizeBy: none
+		sourceColumn: race_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID representing ethnicity as defined by the US Office of Management and Budget: Hispanic or Not Hispanic.
+	column ethnicity_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 60f4f396-b86d-4dfa-bb2c-ee764afab56e
+		summarizeBy: none
+		sourceColumn: ethnicity_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the LOCATION table representing the last known physical address of the person.
+	column location_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f2631e3e-7b49-4c73-b6c0-049608cdba94
+		summarizeBy: none
+		sourceColumn: location_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the PROVIDER table representing the last known primary care provider (General Practitioner) of the person.
+	column provider_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 11e0b5a4-6838-419b-9efa-835082269647
+		summarizeBy: none
+		sourceColumn: provider_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the CARE_SITE table representing where the person’s primary care provider typically practices.
+	column care_site_id
+		dataType: int64
+		formatString: 0
+		lineageTag: cadf0dd0-bd4d-45f1-856b-61e0ce0c8268
+		summarizeBy: none
+		sourceColumn: care_site_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The person identifier as it appears in the source data, retained for ETL traceability and error checking.
+	column person_source_value
+		dataType: string
+		lineageTag: 3aec5a30-8048-470c-a33f-83ee5f3bff35
+		summarizeBy: none
+		sourceColumn: person_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The biological sex of the person as recorded in the source data, prior to mapping to a standard concept.
+	column gender_source_value
+		dataType: string
+		lineageTag: 7f5e1bef-2f54-4964-8a94-45732d989e1b
+		summarizeBy: none
+		sourceColumn: gender_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID for the gender value in the source data, if the source uses an OMOP-supported vocabulary.
+	column gender_source_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: c04d6ae9-52ca-4cb5-b447-c36c2237db50
+		summarizeBy: none
+		sourceColumn: gender_source_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The race of the person as it appears in the source data, prior to mapping to a standard concept.
+	column race_source_value
+		dataType: string
+		lineageTag: 0eb77b37-b93c-4b66-b786-d319ac670271
+		summarizeBy: none
+		sourceColumn: race_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID for the race value in the source data, if coded using an OMOP-supported vocabulary.
+	column race_source_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f903ee09-79c2-4fb3-9166-a08962befadc
+		summarizeBy: none
+		sourceColumn: race_source_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The ethnicity of the person as it appears in the source data, prior to mapping to a standard concept.
+	column ethnicity_source_value
+		dataType: string
+		lineageTag: 451b36cd-a2b3-43fd-8d5c-2ef2234144a4
+		summarizeBy: none
+		sourceColumn: ethnicity_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID for the ethnicity value in the source data, if coded using an OMOP-supported vocabulary.
+	column ethnicity_source_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 72ea86c6-6955-4414-a841-1964425dd094
+		summarizeBy: none
+		sourceColumn: ethnicity_source_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Gender Name' =
+			
+			SWITCH(
+			    'Person'[gender_source_value],
+			    "F", "Female",
+			    "M", "Male",
+			    "Unknown"
+			)
+		lineageTag: b12127da-9371-45f8-8c40-e3e51e36b622
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Patient Age' = 2026 - 'Person'[year_of_birth]
+		formatString: 0
+		lineageTag: 16cadcdd-493a-4aae-b8e8-5f431112869d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	/// Numeric sort key for Age Group column. Hidden — used only for sorting Age Group correctly.
+	column 'Age Group Sort' =
+			SWITCH(
+			    TRUE(),
+			    Person[Patient Age] < 18,  1,
+			    Person[Patient Age] < 30,  2,
+			    Person[Patient Age] < 45,  3,
+			    Person[Patient Age] < 60,  4,
+			    Person[Patient Age] < 75,  5,
+			    6
+			)
+		dataType: int64
+		isHidden
+		lineageTag: 10c9d01c-8e36-4223-b97a-b4d6a26912e2
+		summarizeBy: none
+
+	/// Age band derived from Patient Age. Groups: 0-17, 18-29, 30-44, 45-59, 60-74, 75+.
+	column 'Age Group' =
+			SWITCH(
+			    TRUE(),
+			    Person[Patient Age] < 18,  "0-17",
+			    Person[Patient Age] < 30,  "18-29",
+			    Person[Patient Age] < 45,  "30-44",
+			    Person[Patient Age] < 60,  "45-59",
+			    Person[Patient Age] < 75,  "60-74",
+			    "75+"
+			)
+		dataType: string
+		lineageTag: cf411070-1d0d-4bcf-b2d3-b0827ae113a4
+		summarizeBy: none
+		sortByColumn: 'Age Group Sort'
+
+	partition Person = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_person = Source{[Schema="public",Item="person"]}[Data]
+				in
+				    public_person
+
+	annotation PBI_ResultType = Table
+

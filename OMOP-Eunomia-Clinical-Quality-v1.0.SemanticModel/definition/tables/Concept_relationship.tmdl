@@ -1,0 +1,87 @@
+/// Stores direct relationships between any two concepts, including mappings, hierarchical links, and other semantic associations defined in the RELATIONSHIP table.
+table Concept_relationship
+	lineageTag: 69933c12-90e4-49f4-8b74-477ec9fdccff
+
+	/// Concept ID of the first concept in the relationship (the source).
+	column concept_id_1
+		dataType: int64
+		formatString: 0
+		lineageTag: cf20b210-57cd-4464-96f2-60a5d907233e
+		summarizeBy: none
+		sourceColumn: concept_id_1
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID of the second concept in the relationship (the target).
+	column concept_id_2
+		dataType: int64
+		formatString: 0
+		lineageTag: 8662c2e0-424a-485f-ad16-b68c661dc5c8
+		summarizeBy: none
+		sourceColumn: concept_id_2
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The type of relationship between concept_id_1 and concept_id_2, such as 'Maps to', 'Is a', or 'Has dose form'.
+	column relationship_id
+		dataType: string
+		lineageTag: 8b83d830-95a1-404e-88b2-6a821c1114cc
+		summarizeBy: none
+		sourceColumn: relationship_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The date when this relationship was first recorded.
+	column valid_start_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 56ad2f8b-704a-4857-ae8a-82544b5e9e1c
+		summarizeBy: none
+		sourceColumn: valid_start_date
+
+		variation Variation
+			isDefault
+			relationship: d39df9d0-80fd-40c3-a5d0-f139d932ea6e
+			defaultHierarchy: LocalDateTable_cbeafd5f-4c1e-4a7a-9387-32bdc911ceda.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// The date when this relationship became invalid.
+	column valid_end_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 58aff325-df7e-47ca-83ee-b9d49bf5d6c9
+		summarizeBy: none
+		sourceColumn: valid_end_date
+
+		variation Variation
+			isDefault
+			relationship: a6d5d891-3dff-4926-8266-7cbbff0c84e8
+			defaultHierarchy: LocalDateTable_2cd438bb-e89a-4b02-86cd-c71c936e360b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Reason the relationship was invalidated: D (deleted), U (updated), or NULL if still valid.
+	column invalid_reason
+		dataType: string
+		lineageTag: 3626daf8-01bc-454d-afb7-b3c56beb3929
+		summarizeBy: none
+		sourceColumn: invalid_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Concept_relationship = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_concept_relationship = Source{[Schema="public",Item="concept_relationship"]}[Data]
+				in
+				    public_concept_relationship
+
+	annotation PBI_ResultType = Table
+

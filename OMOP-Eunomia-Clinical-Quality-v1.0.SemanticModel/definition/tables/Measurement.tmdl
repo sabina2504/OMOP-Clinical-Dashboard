@@ -1,0 +1,226 @@
+/// Stores structured numerical or categorical values obtained through standardized examination or testing, including lab results, vital signs, and quantitative findings from pathology reports.
+table Measurement
+	lineageTag: 45c2789a-55a6-425f-a4c4-1bc8c51b76dc
+
+	/// Unique identifier for each measurement record.
+	column measurement_id
+		dataType: int64
+		formatString: 0
+		lineageTag: ed14e4a3-6fcb-40bb-9b81-ae24e02bfd94
+		summarizeBy: none
+		sourceColumn: measurement_id
+
+		annotation SummarizationSetBy = User
+
+	/// Foreign key to the PERSON table identifying the patient for this measurement.
+	column person_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 417106ef-5e1c-494b-abee-0a3deb759182
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID representing the type of measurement. Primary field for analysis. Maps to the Measurement domain.
+	column measurement_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b2d44503-4b12-4590-b633-81f9984d5160
+		summarizeBy: none
+		sourceColumn: measurement_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The date the measurement was taken, closest to the sample draw date if multiple dates exist in the source.
+	column measurement_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3c578efa-0e44-4519-a78f-04206a2c6c00
+		summarizeBy: none
+		sourceColumn: measurement_date
+
+		variation Variation
+			isDefault
+			relationship: 53f16ddd-0605-4973-80ee-25679e0a365a
+			defaultHierarchy: LocalDateTable_8fa8e027-9251-4c66-8fda-a2b90f3ca893.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// The datetime of the measurement. Set to midnight if time is not available.
+	column measurement_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 76a79212-9b8d-4f6d-a942-0b000acb9afc
+		summarizeBy: none
+		sourceColumn: measurement_datetime
+
+		variation Variation
+			isDefault
+			relationship: daad6a9f-ed28-4aa4-bce8-d419647eb228
+			defaultHierarchy: LocalDateTable_4256c487-6324-47d1-a6bd-2a73ff46759d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Legacy time field, present for backwards compatibility. Will be deprecated in a future version.
+	column measurement_time
+		dataType: string
+		lineageTag: 78f461e6-f4a4-4929-8e72-85751fa0af01
+		summarizeBy: none
+		sourceColumn: measurement_time
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID describing the provenance of the measurement, such as EHR lab result or administrative claim.
+	column measurement_type_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: dc8441ac-ea54-44df-ad75-4c4f0e229041
+		summarizeBy: none
+		sourceColumn: measurement_type_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID representing the operator for the result value (e.g., >, <, =). Leave NULL for exact numeric values.
+	column operator_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 15708560-2d63-4ae8-aa70-e938f5f81b79
+		summarizeBy: none
+		sourceColumn: operator_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The numeric result of the measurement, if available (e.g., 7.4 for blood glucose in mmol/L).
+	column value_as_number
+		dataType: double
+		lineageTag: b2d83735-854b-4ac1-9d59-39cd735d74c3
+		summarizeBy: none
+		sourceColumn: value_as_number
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Concept ID for categorical measurement results, such as Positive, Negative, or Abnormal.
+	column value_as_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 886bd6cc-1d28-4aa3-8678-3abc685b96b2
+		summarizeBy: none
+		sourceColumn: value_as_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID representing the unit of the numeric measurement result (e.g., mg/dL, mmHg).
+	column unit_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 4e14c67a-bf91-4649-9c3d-57e57b319d01
+		summarizeBy: none
+		sourceColumn: unit_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Lower bound of the normal reference range for this measurement, as provided by the laboratory.
+	column range_low
+		dataType: double
+		lineageTag: 442f83c3-642a-429d-9990-c60dedd479d4
+		summarizeBy: none
+		sourceColumn: range_low
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Upper bound of the normal reference range for this measurement, as provided by the laboratory.
+	column range_high
+		dataType: double
+		lineageTag: 704e5ba2-7f76-4345-8fbc-0e7b25b8dbb8
+		summarizeBy: none
+		sourceColumn: range_high
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Foreign key to the PROVIDER table identifying the provider who ordered or recorded the measurement.
+	column provider_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 4e96fb7c-a8cb-426f-a421-641d6029345a
+		summarizeBy: none
+		sourceColumn: provider_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the VISIT_OCCURRENCE table linking this measurement to the visit during which it was taken.
+	column visit_occurrence_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 3031f37e-ee68-4b92-9351-1da325587216
+		summarizeBy: none
+		sourceColumn: visit_occurrence_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the VISIT_DETAIL table linking this measurement to a specific sub-visit encounter.
+	column visit_detail_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 53ec64bd-060d-4775-90fc-a2047b328da4
+		summarizeBy: none
+		sourceColumn: visit_detail_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The measurement code as it appears in the source data (e.g., LOINC code), retained for reference.
+	column measurement_source_value
+		dataType: string
+		lineageTag: 3c414b81-1425-4d2a-88ba-fd3d751cd46b
+		summarizeBy: none
+		sourceColumn: measurement_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID for the source measurement code if it maps to an OMOP-supported vocabulary.
+	column measurement_source_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: a8c4cea1-1969-4234-b2bf-c9ac19c4bb31
+		summarizeBy: none
+		sourceColumn: measurement_source_concept_id
+
+		annotation SummarizationSetBy = User
+
+	/// The unit of measurement as it appears in the source data.
+	column unit_source_value
+		dataType: string
+		lineageTag: 2f22aa57-501c-4138-b39f-1cc7580fb112
+		summarizeBy: none
+		sourceColumn: unit_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The verbatim result value from the source data, particularly when a categorical result was mapped to VALUE_AS_CONCEPT_ID.
+	column value_source_value
+		dataType: string
+		lineageTag: c284286a-f951-4db0-87fc-2bf22ef795fd
+		summarizeBy: none
+		sourceColumn: value_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Measurement = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_measurement = Source{[Schema="public",Item="measurement"]}[Data]
+				in
+				    public_measurement
+
+	annotation PBI_ResultType = Table
+

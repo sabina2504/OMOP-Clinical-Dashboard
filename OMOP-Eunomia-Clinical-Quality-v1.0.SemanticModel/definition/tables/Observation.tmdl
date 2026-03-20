@@ -1,0 +1,204 @@
+/// Captures clinical facts obtained during examination, questioning, or procedures that do not fit other domains — including social history, lifestyle facts, family history, and other observations.
+table Observation
+	lineageTag: 0eefbbb5-740f-427e-882d-40cf85bfc2ee
+
+	/// Unique identifier for each observation record.
+	column observation_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 227ca7a1-0c6d-473d-b277-291867f47403
+		summarizeBy: none
+		sourceColumn: observation_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the PERSON table identifying the patient for this observation.
+	column person_id
+		dataType: int64
+		formatString: 0
+		lineageTag: a617734f-d2c3-4c73-9ba1-3e63a60a985e
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID representing the type of observation. Primary field for analysis. Cannot belong to Condition, Procedure, Drug, Measurement, or Device domains.
+	column observation_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 427fbc02-f20f-424d-938c-583a18ca7ef8
+		summarizeBy: none
+		sourceColumn: observation_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The date the observation was obtained or recorded, such as the date of a survey or a patient history intake.
+	column observation_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7d95ebde-9244-4c73-863e-2e7b2ff1603b
+		summarizeBy: none
+		sourceColumn: observation_date
+
+		variation Variation
+			isDefault
+			relationship: 253cdab3-f07a-460c-bddf-3293d11d511f
+			defaultHierarchy: LocalDateTable_8b9e9ad3-db97-487f-b2c7-97631ba04423.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// The datetime the observation was obtained. Set to midnight if time is not available.
+	column observation_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7e8603e5-86c4-41bc-a017-2bd35cc5ee2f
+		summarizeBy: none
+		sourceColumn: observation_datetime
+
+		variation Variation
+			isDefault
+			relationship: 6f19d1f2-2b88-48c6-bdbe-99e25a6bea37
+			defaultHierarchy: LocalDateTable_7bc00d47-2c96-4bff-89d7-618af97cf21f.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID describing the provenance of the observation record, such as EHR record or insurance claim.
+	column observation_type_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 83e688f4-1240-48e7-b41d-5bafdd92854c
+		summarizeBy: none
+		sourceColumn: observation_type_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The numeric result of the observation, if applicable and available.
+	column value_as_number
+		dataType: double
+		lineageTag: b36419f5-bb2a-4287-9499-8758dfe790c9
+		summarizeBy: none
+		sourceColumn: value_as_number
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// The categorical or free-text result of the observation, if applicable.
+	column value_as_string
+		dataType: string
+		lineageTag: 635a817d-f058-49e5-ac79-155c71ef7f07
+		summarizeBy: none
+		sourceColumn: value_as_string
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID for the categorical result of the observation. Common for ICD codes encoding both the observation and its finding.
+	column value_as_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 0c68ee64-22a0-4ad0-89ca-e22a07540856
+		summarizeBy: none
+		sourceColumn: value_as_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID for attributes that further specify the clinical fact, such as severity or certainty.
+	column qualifier_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a567152-a040-4d9c-bfdf-50e0fbd71981
+		summarizeBy: none
+		sourceColumn: qualifier_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Standard concept ID for the unit associated with a numeric observation result.
+	column unit_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1de21c9e-7980-4519-bc4c-818632df89d8
+		summarizeBy: none
+		sourceColumn: unit_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the PROVIDER table identifying the provider who recorded the observation.
+	column provider_id
+		dataType: int64
+		formatString: 0
+		lineageTag: c0f70c45-e313-4906-855f-ba98c346d54b
+		summarizeBy: none
+		sourceColumn: provider_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the VISIT_OCCURRENCE table linking this observation to the visit during which it was recorded.
+	column visit_occurrence_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c093057-5366-4d2b-af7f-e8eda61e868e
+		summarizeBy: none
+		sourceColumn: visit_occurrence_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the VISIT_DETAIL table linking this observation to a specific sub-visit encounter.
+	column visit_detail_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 2cedf4ed-ab30-45c6-8b62-d7fbf08164b9
+		summarizeBy: none
+		sourceColumn: visit_detail_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The observation code as it appears in the source data, retained for reference.
+	column observation_source_value
+		dataType: string
+		lineageTag: 88cb9a20-3b5c-497e-be9b-9f372013a1ad
+		summarizeBy: none
+		sourceColumn: observation_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Concept ID for the source observation code if it maps to an OMOP-supported vocabulary.
+	column observation_source_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: fbb87901-7cef-41c7-9776-b670d367d263
+		summarizeBy: none
+		sourceColumn: observation_source_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The unit as it appears in the source data for numeric observations.
+	column unit_source_value
+		dataType: string
+		lineageTag: 72b1a07a-a19a-459f-843c-33d864bc02bb
+		summarizeBy: none
+		sourceColumn: unit_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The qualifier as it appears in the source data, prior to mapping to a standard concept.
+	column qualifier_source_value
+		dataType: string
+		lineageTag: 208ed8f4-80ad-49f9-9dfd-416fef50dd3d
+		summarizeBy: none
+		sourceColumn: qualifier_source_value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Observation = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_observation = Source{[Schema="public",Item="observation"]}[Data]
+				in
+				    public_observation
+
+	annotation PBI_ResultType = Table
+

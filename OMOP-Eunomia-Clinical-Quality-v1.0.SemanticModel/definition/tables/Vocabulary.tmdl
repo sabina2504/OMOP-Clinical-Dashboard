@@ -1,0 +1,56 @@
+/// Reference table listing all vocabularies integrated into the OMOP CDM (e.g., SNOMED-CT, ICD10CM, RxNorm, LOINC), including version information and source references.
+table Vocabulary
+	lineageTag: 6cd358fb-0021-4140-87a3-37c6806e9e6e
+
+	column vocabulary_id
+		dataType: string
+		lineageTag: 26177dd4-7cda-4709-ba59-2ffe8db3e3d6
+		summarizeBy: none
+		sourceColumn: vocabulary_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column vocabulary_name
+		dataType: string
+		lineageTag: 2c1beea7-9a38-4683-a395-2d47717766da
+		summarizeBy: none
+		sourceColumn: vocabulary_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column vocabulary_reference
+		dataType: string
+		lineageTag: f130a78b-a91f-406a-a24a-c8fdf05a7b09
+		summarizeBy: none
+		sourceColumn: vocabulary_reference
+
+		annotation SummarizationSetBy = Automatic
+
+	column vocabulary_version
+		dataType: string
+		lineageTag: 7dd38a71-547c-4268-b1fa-2cca70c93eb6
+		summarizeBy: none
+		sourceColumn: vocabulary_version
+
+		annotation SummarizationSetBy = Automatic
+
+	column vocabulary_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 5824f3e8-c8f5-4cdf-a9b1-c188ba7f2866
+		summarizeBy: none
+		sourceColumn: vocabulary_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Vocabulary = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_vocabulary = Source{[Schema="public",Item="vocabulary"]}[Data]
+				in
+				    public_vocabulary
+
+	annotation PBI_ResultType = Table
+

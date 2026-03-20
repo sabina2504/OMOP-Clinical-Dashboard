@@ -1,0 +1,151 @@
+table Date
+	lineageTag: 5eb0046b-e7f3-4577-8a3b-b63fd5d98113
+	dataCategory: Time
+
+	column Date
+		isUnique
+		formatString: Short Date
+		lineageTag: df2dc61a-86f5-4f85-ad61-5cf1fa4367ed
+		dataCategory: PaddedDateTableDates
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+	column DateKey
+		lineageTag: 48748236-5bf0-41d7-bd94-72984ce3ce12
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DateKey]
+
+	column Year
+		lineageTag: 11c71952-ea79-4591-894e-c92441edf927
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year]
+
+	column Quarter
+		lineageTag: 69f2166c-c297-43f0-94d5-f97842165eb5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter]
+
+	column QuarterLabel
+		lineageTag: 826493f2-4a48-48b4-8f4f-183ecce7f118
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [QuarterLabel]
+		sortByColumn: Quarter
+
+	column Month
+		lineageTag: cf8ab572-1eb7-40cc-8cf8-c3dead4d4fca
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+
+	column MonthName
+		lineageTag: 23fc3a5b-9a88-4cb9-9f42-1879346c5e74
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MonthName]
+		sortByColumn: Month
+
+	column MonthShort
+		lineageTag: ef20b309-0631-4f93-8d10-8b2ff687466f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MonthShort]
+		sortByColumn: Month
+
+	column MonthYear
+		lineageTag: d25fa073-f757-4dff-9481-c18d5c5e39f8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MonthYear]
+		sortByColumn: MonthSort
+
+	column MonthSort
+		isHidden
+		lineageTag: 0fd4c2d2-da53-46cd-a899-606a978d9420
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MonthSort]
+
+	column WeekNumber
+		lineageTag: c28ceff0-f667-4c19-8c9b-6bf8c6eac9fa
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [WeekNumber]
+
+	column DayOfWeek
+		lineageTag: 3b6d87a4-24af-4533-8ab6-fdab281c8ea9
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DayOfWeek]
+
+	column DayOfWeekName
+		lineageTag: 186759cf-43f1-4d40-b288-2602ed65335c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DayOfWeekName]
+		sortByColumn: DayOfWeek
+
+	column DayOfWeekShort
+		lineageTag: 94f8470a-78c7-4506-b984-74486d4d5b2a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DayOfWeekShort]
+		sortByColumn: DayOfWeek
+
+	column DayOfMonth
+		lineageTag: 84389c3c-6da0-4103-9aad-5e45f583b371
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DayOfMonth]
+
+	column DayOfYear
+		lineageTag: 74224c2d-8a32-47e1-a28d-9fc1a6109438
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DayOfYear]
+
+	column IsWeekend
+		lineageTag: cfdad7d2-a27d-494b-8610-ce7953eb658f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [IsWeekend]
+
+	column YearMonth
+		lineageTag: b1d4db69-23f7-41aa-9942-350d9e0b0119
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [YearMonth]
+		sortByColumn: MonthSort
+
+	partition Date = calculated
+		mode: import
+		source =
+				VAR _StartDate = DATE(1908,1,1)
+				VAR _EndDate = DATE(2019,12,31)
+				VAR _Dates = CALENDAR(_StartDate, _EndDate)
+				RETURN
+				ADDCOLUMNS(
+				    _Dates,
+				    "DateKey",         FORMAT([Date], "YYYYMMDD") + 0,
+				    "Year",            YEAR([Date]),
+				    "Quarter",         QUARTER([Date]),
+				    "QuarterLabel",    "Q" & QUARTER([Date]) & " " & YEAR([Date]),
+				    "Month",           MONTH([Date]),
+				    "MonthName",       FORMAT([Date], "MMMM"),
+				    "MonthShort",      FORMAT([Date], "MMM"),
+				    "MonthYear",       FORMAT([Date], "MMM YYYY"),
+				    "MonthSort",       YEAR([Date]) * 100 + MONTH([Date]),
+				    "WeekNumber",      WEEKNUM([Date], 2),
+				    "DayOfWeek",       WEEKDAY([Date], 2),
+				    "DayOfWeekName",   FORMAT([Date], "dddd"),
+				    "DayOfWeekShort",  FORMAT([Date], "ddd"),
+				    "DayOfMonth",      DAY([Date]),
+				    "DayOfYear",       DATEDIFF(DATE(YEAR([Date]),1,1), [Date], DAY) + 1,
+				    "IsWeekend",       IF(WEEKDAY([Date], 2) >= 6, TRUE, FALSE),
+				    "YearMonth",       YEAR([Date]) & "-" & FORMAT(MONTH([Date]), "00")
+				)
+

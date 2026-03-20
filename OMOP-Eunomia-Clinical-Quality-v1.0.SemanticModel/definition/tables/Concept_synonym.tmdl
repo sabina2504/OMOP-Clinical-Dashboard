@@ -1,0 +1,41 @@
+/// Contains alternative names, synonyms, and translations for concepts, enabling broader search and mapping across terminologies.
+table Concept_synonym
+	lineageTag: 84ee4897-8484-4deb-b35d-99f1eb322ea1
+
+	column concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 0e8127d0-350d-4cb6-842a-c6071006ae11
+		summarizeBy: none
+		sourceColumn: concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column concept_synonym_name
+		dataType: string
+		lineageTag: 921cad9f-d4b0-4a91-b41d-726aeaea0df9
+		summarizeBy: none
+		sourceColumn: concept_synonym_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column language_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 01a0ecfc-2b4b-4a5b-aaf4-965ea779f019
+		summarizeBy: none
+		sourceColumn: language_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Concept_synonym = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_concept_synonym = Source{[Schema="public",Item="concept_synonym"]}[Data]
+				in
+				    public_concept_synonym
+
+	annotation PBI_ResultType = Table
+

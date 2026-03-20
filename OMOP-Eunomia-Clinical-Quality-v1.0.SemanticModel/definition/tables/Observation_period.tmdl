@@ -1,0 +1,79 @@
+/// Defines spans of time during which a person is expected to have clinical events recorded. Absence of records within these periods can be interpreted as absence of events.
+table Observation_period
+	lineageTag: 3102e715-d7c1-49d3-9927-375f7e7965ea
+
+	/// Unique identifier for each observation period record. A person may have multiple non-overlapping observation periods.
+	column observation_period_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f9d043d8-98a8-4de6-b0c4-757a18a4bdfc
+		summarizeBy: none
+		sourceColumn: observation_period_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Foreign key to the PERSON table identifying the patient this observation period belongs to.
+	column person_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 87d17d10-4ac2-446b-8bfd-6a359263fcd9
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The start date of the observation period. Often inferred as the earliest clinical event date for the person.
+	column observation_period_start_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 32b101de-ff2c-4ee6-b237-609d0d8cd7d1
+		summarizeBy: none
+		sourceColumn: observation_period_start_date
+
+		variation Variation
+			isDefault
+			relationship: 781d7fdb-47fc-4514-9be8-f0eb20291a52
+			defaultHierarchy: LocalDateTable_98548626-877d-4f51-8bea-85db6a15440c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// The end date of the observation period. Often inferred as the date of the last clinical event or end of enrollment.
+	column observation_period_end_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 738d9678-24a2-4e6a-a1dd-8c2d493570dd
+		summarizeBy: none
+		sourceColumn: observation_period_end_date
+
+		variation Variation
+			isDefault
+			relationship: 1d4c54c5-4264-44fd-8d9a-7cf581d21974
+			defaultHierarchy: LocalDateTable_f98cd711-77f5-4c33-aed6-3b0e359c9cf7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Standard concept ID describing the provenance of the observation period, such as insurance enrollment, EHR encounter-based, or registry-based.
+	column period_type_concept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 211f352e-2e77-40cd-8a19-75b28fe94bea
+		summarizeBy: none
+		sourceColumn: period_type_concept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Observation_period = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "omop_cdm"),
+				    public_observation_period = Source{[Schema="public",Item="observation_period"]}[Data]
+				in
+				    public_observation_period
+
+	annotation PBI_ResultType = Table
+
