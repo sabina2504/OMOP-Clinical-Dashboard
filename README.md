@@ -58,4 +58,4 @@ Power BI Desktop (latest recommended). No gateway needed — fully imported mode
 - [OMOP CDM v5.4 Specification](https://ohdsi.github.io/CommonDataModel/cdm54.html)
 - [The Book of OHDSI](https://ohdsi.github.io/TheBookOfOhdsi/)
 - [OHDSI Community](https://www.ohdsi.org/)
-- [Eunomia Dataset] (https://github.com/OHDSI/EunomiaDatasets)
+- [Eunomia Dataset](https://github.com/OHDSI/EunomiaDatasets)
